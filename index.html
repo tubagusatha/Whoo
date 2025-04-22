@@ -8,8 +8,23 @@
 </head>
 <body>
     
-    <audio src="img/margaret.mp3" autoplay></audio>
+  <button class="play-button" id="toggleMusic">Play</button>
+  <audio id="bgm" src="/img/margaret.mp3" preload="auto"></audio>
 
+  <script>
+    const audio = document.getElementById('bgm');
+    const button = document.getElementById('toggleMusic');
+
+    button.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        button.textContent = 'Hentikan';
+      } else {
+        audio.pause();
+        button.textContent = 'Play';
+      }
+    });
+  </script>
   <div class="carousel">
     <div class="carousel-item">
       <div class="carousel-box">
