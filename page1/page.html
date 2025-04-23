@@ -13,13 +13,25 @@
   </head>
   <body>
     <div class="container">
-        <div style="display: flex; justify-content: space-between; ">
-            <button class="play-button" id="toggleMusic">Play</button>
-            <audio id="bgm" src="/img/youngandbe.mp3" preload="auto"></audio>
+      <div style="display: flex; justify-content: space-between">
+        <button class="play-button" id="toggleMusic">Play</button>
+        <audio id="bgm" src="/img/youngandbe.mp3" preload="auto"></audio>
 
-            <a href="/index.html" style="color: #242424; text-decoration: none; border-radius: 250px; padding: 0px 20px; text-align: center; background: aqua; align-items: center; display: flex;">Back</a>
-        </div>
-
+        <a
+          href="/index.html"
+          style="
+            color: #242424;
+            text-decoration: none;
+            border-radius: 250px;
+            padding: 0px 20px;
+            text-align: center;
+            background: aqua;
+            align-items: center;
+            display: flex;
+          "
+          >Back</a
+        >
+      </div>
 
       <script>
         const audio = document.getElementById("bgm");
@@ -147,17 +159,25 @@
     font-family: "Poppins", sans-serif;
     font-weight: 600;
     font-style: italic;
+    background: linear-gradient(
+    135deg,
+    rgba(0, 0, 0, 0.4),
+    rgba(34, 0, 51, 0.3)
+  ),
+  url("/img/bg.jpg");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
   }
 
   :root {
-    font-family: "PixelText", serif;
     font-optical-sizing: auto;
     line-height: 1.5;
     font-weight: 400;
 
     color-scheme: light dark;
     color: rgba(255, 255, 255, 0.87);
-    background-color: #242424;
 
     font-synthesis: none;
     text-rendering: optimizeLegibility;
