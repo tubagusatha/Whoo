@@ -17,13 +17,21 @@ body {
     pointer-events: none;
   }
 
+  .button-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px; /* Jarak antar tombol */
+    margin-top: 30px;
+  }
+
   .play-button {
     width: 80px;
     height: 80px;
     border-radius: 50%;
     background-color: #ff6b81;
     border: none;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     color: white;
     font-size: 16px;
     font-weight: bold;
@@ -32,8 +40,33 @@ body {
   }
 
   .play-button:hover {
-    background-color: #ff4757;
+    background-color: #4778ff;
     transform: scale(1.05);
+  }
+
+  .go-to {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .go-to a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #007BFF;
+    color: white;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    text-decoration: none;
+    font-weight: bold;
+    font-family: Arial, sans-serif;
+    transition: background-color 0.3s ease;
+  }
+
+  .go-to a:hover {
+    background-color: #0056b3;
   }
   
   .carousel-item {

@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playwrite+AU+SA:wght@100..400&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <title>Book</title>
+  </head>
+  <body>
+    <div class="container">
+        <div style="display: flex; justify-content: space-between; ">
+            <button class="play-button" id="toggleMusic">Play</button>
+            <audio id="bgm" src="/img/youngandbe.mp3" preload="auto"></audio>
+
+            <a href="/index.html" style="color: #242424; text-decoration: none; border-radius: 250px; padding: 0px 20px; text-align: center; background: aqua; align-items: center; display: flex;">Back</a>
+        </div>
+
+
+      <script>
+        const audio = document.getElementById("bgm");
+        const button = document.getElementById("toggleMusic");
+
+        button.addEventListener("click", () => {
+          if (audio.paused) {
+            audio.play();
+            button.textContent = "Stop";
+          } else {
+            audio.pause();
+            button.textContent = "Play";
+          }
+        });
+      </script>
+      <div class="sprite-wrapper">
+        <div class="book">
+          <!--  Carousel container -->
+          <div class="carousel" style="--slides: 4">
+            <!--  Bg sprite -->
+            <div class="sprite"></div>
+            <!--  Carousel items -->
+            <div class="carousel-item">
+              <div class="page-container">
+                <div class="page left-page">
+                  <div>
+                    <p style="margin: 0">
+                      💖 Haii Sayangkuu, maaf kalau akhir-akhir ini aku jarang
+                      chat. Aku tahu kamu mungkin merasa jauh, tapi percayalah,
+                      aku selalu mikirin kamu. Meski sibuk dengan banyak hal,
+                      kamu tetap yang pertama ada di pikiranku setiap kali ada
+                      waktu.
+                    </p>
+                  </div>
+                </div>
+                <div class="page right-page">
+                  <div>
+                    <p style="margin: 0">
+                      akuu memang sibuk dengann banyak proyek yang harus
+                      diselesaikann, tapi satu hal yang nggak pernah lepas dari
+                      pikiranku — it's you.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="carousel-item">
+              <div class="page-container">
+                <div class="page left-page">
+                  <div>
+                    <p style="margin: 0">
+                      Website ini bukan cuma buat pamer project, tapi tempat
+                      kecil di dunia maya buat kita berdua. Kalau kamu kangen,
+                      buka aja halaman ini. Anggap ini surat digital dari aku,
+                      yang selalu mikirin kamu meskipun nggak bisa bilang setiap
+                      saat.
+                    </p>
+                  </div>
+                </div>
+                <div class="page right-page">
+                  <div>
+                    <p style="margin: 0">
+                      There might be days where I can’t say “I miss you”
+                      directly, but every detail in this space is my quiet way
+                      of saying it. Karena kadang cinta nggak perlu selalu
+                      diucapin, cukup ditunjukin lewat usaha kecil yang tulus
+                      dan nggak kelihatan.
+                    </p>
+                    <br />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="carousel-item">
+              <div class="page-container">
+                <div class="page left-page">
+                  <div>
+                    So yeah... I’m not the best texter, but I promise I’m trying
+                    to be the best version of myself — for you, for us, for the
+                    future I’m building that hopefully, includes your laughter,
+                    your annoying jokes, your sleepy voice, and your endless
+                    support.
+                  </div>
+                </div>
+                <div class="page right-page">
+                  <div>
+                    You know, sayanggg... Kamu tuh bukan cuma seseorang yang aku
+                    sayang, tapi juga sumber semangat paling tulus yang pernah
+                    aku punya. Kamu kayak notifikasi paling dinanti di tengah
+                    kesibukan,
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="carousel-item">
+              <div class="page-container">
+                <div class="page left-page">
+                  <div>
+                    Aku tahu kadang aku susah banget kasih kabar, tapi bukan
+                    berarti aku menjauh. Justru, semakin hari aku semakin yakin
+                    kalau kamu itu bagian penting dari hidupku. kamu itu alasan
+                    kenapa aku pengen jadi versi terbaik dari diriku
+                  </div>
+                </div>
+                <div class="page right-page">
+                  <div>
+                    Kalau kamu lagi kangen, kalau kamu lagi ngerasa jauh, lihat
+                    halaman ini lagi ya. Karena di sinilah aku nitipin rindu,
+                    dan rasa sayang yang nggak pernah habis buat kamu. Aku
+                    kangen kamu, aku sayang kamu, dan aku selalu bangga punya
+                    kamu, Sayanggg. 💖
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+
+<style>
+  body {
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    font-style: italic;
+  }
+
+  :root {
+    font-family: "PixelText", serif;
+    font-optical-sizing: auto;
+    line-height: 1.5;
+    font-weight: 400;
+
+    color-scheme: light dark;
+    color: rgba(255, 255, 255, 0.87);
+    background-color: #242424;
+
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow: hidden;
+
+    /* sprite image */
+    --sprite-image: url(https://assets.codepen.io/36869/book.webp);
+
+    /* sprite animation settings */
+    /* animation duration */
+    --sprite-as: 0.8s;
+    /* animation direction */
+    --sprite-ad: normal;
+    /* animation fill mode */
+    --sprite-af: none;
+    /* animation play state */
+    --sprite-ap: running;
+    /* animation iteration count */
+    --sprite-ai: infinite;
+    /* animation timing function */
+    --sprite-at: linear;
+    /* animation frame rate */
+    --sprite-fr: 12;
+  }
+
+  @layer base {
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-sizing: border-box;
+      padding: 1rem;
+    }
+
+    .sprite-wrapper {
+      position: relative;
+      width: 100%;
+      margin: 0 auto;
+    }
+  }
+
+  .play-button {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: #ff6b81;
+    border: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s;
+  }
+
+  .play-button:hover {
+    background-color: #4778ff;
+    transform: scale(1.05);
+  }
+
+  @layer main {
+    /* Frame start position */
+    @property --sprite-fs {
+      syntax: "<integer>";
+      initial-value: 0;
+      inherits: true;
+    }
+    @property --_progress {
+      syntax: "<percentage>";
+      inherits: false;
+      initial-value: 0%;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      gap: 3rem;
+
+      /* sprite columns */
+      --sprite-c: 5;
+      /* sprite image height */
+      --sprite-h: 3000;
+      /* sprite image width */
+      --sprite-w: 9600;
+      /* sprite frames */
+      --sprite-f: 7;
+      /* animation duration based on frame rate */
+      --sprite-as: calc(var(--sprite-f) / var(--sprite-fr) * 1s);
+
+      /* frame rows */
+      --sprite-r: round(up, calc(var(--sprite-f) / var(--sprite-c)), 1);
+      /* frame height */
+      --sprite-sh: calc(var(--sprite-h) / var(--sprite-r));
+      /* frame target height, width */
+      --sprite-th: calc(var(--sprite-sh) / 2);
+
+      /* aspect ratio */
+      --sprite-ar: calc(var(--sprite-th) / var(--sprite-sh));
+      --sprite-uh: calc(var(--sprite-h) * var(--sprite-ar));
+      --sprite-uw: calc(var(--sprite-w) * var(--sprite-ar));
+
+      /* frame width */
+      --sprite-tw: calc(var(--sprite-uw) / var(--sprite-c));
+
+      > h1 {
+        color: #d2d4e1;
+        margin: 0;
+        width: fit-content;
+        font-weight: 500;
+        font-size: 1.75rem;
+        text-align: center;
+      }
+
+      .book {
+        position: relative;
+        display: grid;
+        grid-template-areas:
+          "scroll scroll scroll"
+          "left markers right";
+        gap: 1rem;
+
+        .sprite {
+          position: absolute;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          height: calc(1px * var(--sprite-th));
+          width: calc(1px * var(--sprite-tw));
+          margin: calc(
+              -1px * calc((var(--sprite-th) - (var(--sprite-th) * 0.6107)) / 2)
+            )
+            calc(
+              -1px * calc((var(--sprite-tw) - (var(--sprite-tw) * 0.7042)) / 2)
+            );
+          background-image: var(--sprite-image);
+          transform-origin: center center;
+          background-repeat: no-repeat;
+          background-size: calc(1px * var(--sprite-uw))
+            calc(1px * var(--sprite-uh));
+          z-index: -1;
+
+          /* Frame end position */
+          --sprite-fe: calc(var(--sprite-f) * (var(--slides) - 1));
+          --sprite-fs-n: mod(var(--sprite-fs), var(--sprite-f));
+          /* calculate the row and column position */
+          --row: calc(
+            round(
+                down,
+                calc(
+                  calc(var(--sprite-tw) * var(--sprite-fs-n)) / var(--sprite-uw)
+                ),
+                1
+              ) * var(--sprite-th)
+          );
+          --col: mod(
+            calc(var(--sprite-tw) * var(--sprite-fs-n)),
+            var(--sprite-uw)
+          );
+
+          background-position: calc(-1px * var(--col)) calc(-1px * var(--row));
+          animation: frame var(--sprite-as) var(--sprite-at) 0s var(--sprite-ad)
+            var(--sprite-af) var(--sprite-ap);
+          animation-timeline: --carousel-timeline;
+        }
+
+        .carousel {
+          counter-increment: curpage;
+          grid-area: scroll;
+          overflow-x: auto;
+          scroll-snap-type: x mandatory;
+          overscroll-behavior-x: contain;
+
+          display: grid;
+          margin: 0 auto;
+          width: calc(1px * (var(--sprite-tw) * 0.7042));
+          height: calc(1px * (var(--sprite-th) * 0.6107));
+          grid: 1fr / auto-flow 100%;
+          scroll-timeline: --carousel-timeline x;
+          scroll-behavior: smooth;
+          scrollbar-width: none;
+          scroll-marker-group: after;
+
+          &::scroll-button(*) {
+            inline-size: 64px;
+            aspect-ratio: 1;
+            border-radius: 0;
+            border: 0;
+            background-color: transparent;
+            cursor: pointer;
+          }
+
+          &::scroll-button(*):disabled {
+            filter: invert(1);
+            opacity: 0.5;
+          }
+          &::scroll-button(*):not(:disabled):is(:hover, :active) {
+            filter: drop-shadow(2px 4px 6px black);
+          }
+
+          &::scroll-button(*):not(:disabled):active {
+            scale: 90%;
+          }
+
+          &::scroll-button(left) {
+            content: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4IiB2aWV3Qm94PSIwIDAgMjMyLjAwMDAwMCAyNTYuMDAwMDAwIiBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJ4TWlkWU1pZCBtZWV0IiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdHJhbnNmb3JtPSJtYXRyaXgoLTEsMCwwLDEsMCwwKSI+Cgo8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwLjAwMDAwMCwyNTYuMDAwMDAwKSBzY2FsZSgwLjEwMDAwMCwtMC4xMDAwMDApIiBmaWxsPSIjZmZmIiBzdHJva2U9Im5vbmUiPgo8cGF0aCBkPSJNMTE4MCAyMTEwIGwwIC0xODAgLTU0MCAwIC01NDAgMCAwIC03MjUgMCAtNzI1IDU0MCAwIDU0MCAwIDAgLTE4MCAwIC0xODAgMTIwIDAgMTIwIDAgMCA2MCAwIDYwIDYwIDAgNjAgMCAwIDYwIDAgNjAgNjAgMCA2MCAwIDAgNjAgMCA2MCA2MCAwIDYwIDAgMCA2MCAwIDYwIDYwIDAgNjAgMCAwIDYwIDAgNjAgNjAgMCA2MCAwIDAgNjAgMCA2MCA2MCAwIDYwIDAgMCA1MyBjMCAyOSA1IDU4IDEyIDY1IDcgNyAzNCAxMiA2MCAxMiBsNDggMCAwIDIzNSAwIDIzNSAtNjAgMCAtNjAgMCAwIDY1IDAgNjUgLTQ3IDAgYy02OCAwIC03NSAtNyAtNzEgLTcxIGwzIC01NCA1OCAtMyA1NyAtMyAwIC0xMTkgMCAtMTIwIC01NSAwIC01NCAwIC0zIC01NyAtMyAtNTggLTYwIC01IC02MCAtNSAtMyAtNTcgLTMgLTU3IC01NyAtMyAtNTcgLTMgLTMgLTU3IC0zIC01NyAtNTcgLTMgLTU3IC0zIC0zIC01NyAtMyAtNTcgLTU3IC0zIC01NyAtMyAtMyAtNTcgLTMgLTU3IC01NyAtMyAtNTcgLTMgLTMgLTU4IC0zIC01OCAtNTcgMyAtNTcgMyAtMyAxNzggLTIgMTc3IC01NDAgMCAtNTQwIDAgMiA0ODMgMyA0ODIgNTM3IDMgNTM2IDIgNyAzMiBjNCAxNyA2IDk3IDQgMTc3IGwtNCAxNDYgNTggMyA1NyAzIDAgLTYxIDAgLTYwIDYwIDAgNjAgMCAwIC02MCAwIC02MCA2MCAwIDYwIDAgMCAtNjAgMCAtNjAgNjAgMCA2MCAwIDAgLTYwIDAgLTYwIDYwIDAgNjAgMCAwIC02MCAwIC02MCA2MCAwIDYwIDAgMCA2MCAwIDYwIC02MCAwIC02MCAwIDAgNjAgMCA2MCAtNjAgMCAtNjAgMCAwIDYwIDAgNjAgLTYwIDAgLTYwIDAgMCA2MCAwIDYwIC02MCAwIC02MCAwIDAgNjAgMCA2MCAtNjAgMCAtNjAgMCAwIDYwIDAgNjAgLTEyMCAwIC0xMjAgMCAwIC0xODB6Ij48L3BhdGg+CjwvZz4KPC9zdmc+") /
+              "Scroll Left";
+            grid-area: left;
+          }
+
+          &::scroll-button(right) {
+            content: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMCIgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4IiB2aWV3Qm94PSIwIDAgMjMyLjAwMDAwMCAyNTYuMDAwMDAwIiBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJ4TWlkWU1pZCBtZWV0Ij4KCjxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDAuMDAwMDAwLDI1Ni4wMDAwMDApIHNjYWxlKDAuMTAwMDAwLC0wLjEwMDAwMCkiIGZpbGw9IiNmZmYiIHN0cm9rZT0ibm9uZSI+CjxwYXRoIGQ9Ik0xMTgwIDIxMTAgbDAgLTE4MCAtNTQwIDAgLTU0MCAwIDAgLTcyNSAwIC03MjUgNTQwIDAgNTQwIDAgMCAtMTgwIDAgLTE4MCAxMjAgMCAxMjAgMCAwIDYwIDAgNjAgNjAgMCA2MCAwIDAgNjAgMCA2MCA2MCAwIDYwIDAgMCA2MCAwIDYwIDYwIDAgNjAgMCAwIDYwIDAgNjAgNjAgMCA2MCAwIDAgNjAgMCA2MCA2MCAwIDYwIDAgMCA2MCAwIDYwIDYwIDAgNjAgMCAwIDUzIGMwIDI5IDUgNTggMTIgNjUgNyA3IDM0IDEyIDYwIDEyIGw0OCAwIDAgMjM1IDAgMjM1IC02MCAwIC02MCAwIDAgNjUgMCA2NSAtNDcgMCBjLTY4IDAgLTc1IC03IC03MSAtNzEgbDMgLTU0IDU4IC0zIDU3IC0zIDAgLTExOSAwIC0xMjAgLTU1IDAgLTU0IDAgLTMgLTU3IC0zIC01OCAtNjAgLTUgLTYwIC01IC0zIC01NyAtMyAtNTcgLTU3IC0zIC01NyAtMyAtMyAtNTcgLTMgLTU3IC01NyAtMyAtNTcgLTMgLTMgLTU3IC0zIC01NyAtNTcgLTMgLTU3IC0zIC0zIC01NyAtMyAtNTcgLTU3IC0zIC01NyAtMyAtMyAtNTggLTMgLTU4IC01NyAzIC01NyAzIC0zIDE3OCAtMiAxNzcgLTU0MCAwIC01NDAgMCAyIDQ4MyAzIDQ4MiA1MzcgMyA1MzYgMiA3IDMyIGM0IDE3IDYgOTcgNCAxNzcgbC00IDE0NiA1OCAzIDU3IDMgMCAtNjEgMCAtNjAgNjAgMCA2MCAwIDAgLTYwIDAgLTYwIDYwIDAgNjAgMCAwIC02MCAwIC02MCA2MCAwIDYwIDAgMCAtNjAgMCAtNjAgNjAgMCA2MCAwIDAgLTYwIDAgLTYwIDYwIDAgNjAgMCAwIDYwIDAgNjAgLTYwIDAgLTYwIDAgMCA2MCAwIDYwIC02MCAwIC02MCAwIDAgNjAgMCA2MCAtNjAgMCAtNjAgMCAwIDYwIDAgNjAgLTYwIDAgLTYwIDAgMCA2MCAwIDYwIC02MCAwIC02MCAwIDAgNjAgMCA2MCAtMTIwIDAgLTEyMCAwIDAgLTE4MHoiLz4KPC9nPgo8L3N2Zz4=") /
+              "Scroll Right";
+            grid-area: right;
+            justify-self: flex-end;
+          }
+
+          &::scroll-marker-group {
+            content: "";
+            width: 100%;
+            height: 8px;
+            padding: 2px 0;
+            display: grid;
+            position: absolute;
+            grid-area: markers;
+
+            grid-auto-flow: column;
+            place-self: center;
+            overflow: hidden;
+            border: 1px solid #000;
+
+            background: linear-gradient(90deg, #f1e2b2 0%) no-repeat left center;
+            --_progress: calc(calc(100 / var(--slides)) * 1%);
+            background-size: var(--_progress, 20%) 100%;
+
+            animation: progress linear both;
+            animation-timeline: --carousel-timeline;
+          }
+
+          & > .carousel-item {
+            scroll-snap-stop: always;
+            scroll-snap-align: start;
+            animation: count-before linear forwards;
+            animation-range: exit;
+            counter-increment: page;
+            animation-timeline: view(x);
+
+            position: relative;
+            box-sizing: border-box;
+            color: #333;
+
+            &::scroll-marker {
+              content: "";
+              position: relative;
+              left: -1px;
+              width: 100%;
+              height: 100%;
+              display: block;
+              box-sizing: border-box;
+              box-shadow: 2px 0 0 #000;
+            }
+
+            &:last-of-type {
+              &::scroll-marker {
+                box-shadow: none;
+              }
+            }
+
+            .page-container {
+              display: flex;
+              gap: 3rem;
+              height: 100%;
+
+              animation: stay-centered linear both;
+              animation-timeline: view(x);
+              timeline-scope: --parallax-item;
+            }
+
+            .left-page,
+            .right-page {
+              flex: 1;
+              font-size: small;
+              overflow: hidden;
+              display: grid;
+              grid-template-rows: 1fr auto;
+
+              &:after {
+                bottom: 15px;
+                color: hsl(45.71deg 69.23% 30%);
+              }
+
+              > div {
+                text-align: justify;
+                hyphens: auto;
+                line-height: normal;
+                display: block;
+                word-wrap: break-word;
+              }
+            }
+
+            .left-page {
+              padding: 20px 0 20px 20px;
+              &:after {
+                content: counter(curpage);
+              }
+            }
+
+            .right-page {
+              padding: 20px 20px 20px 0;
+              counter-increment: curpage;
+              &:after {
+                content: counter(curpage);
+                place-self: self-end;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  @media (width < 748px) {
+    .container {
+      --sprite-th: calc(var(--sprite-sh) / 2.5);
+
+      > h1 {
+        font-size: 1.25rem;
+      }
+
+      .page {
+        > div {
+          font-size: 0.24rem;
+        }
+      }
+    }
+  }
+
+  @media (width < 560px) {
+    .container {
+      --sprite-th: calc(var(--sprite-sh) / 4);
+
+      > h1 {
+        font-size: 1rem;
+      }
+
+      .page {
+        > div {
+          font-size: 0.6rem;
+        }
+
+        &:after {
+          font-size: 0.5rem;
+        }
+      }
+    }
+  }
+
+  @keyframes stay-centered {
+    entry 0% {
+      opacity: 0;
+      translate: -100%;
+    }
+    entry 75% {
+      opacity: 0;
+      translate: -25%;
+    }
+    entry 100% {
+      opacity: 1;
+      translate: 0%;
+    }
+    exit 0% {
+      opacity: 1;
+      translate: 0%;
+    }
+    exit 50% {
+      opacity: 0;
+      translate: 50%;
+    }
+    exit 100% {
+      opacity: 0;
+      translate: 100%;
+    }
+  }
+
+  @keyframes count-before {
+    1%,
+    100% {
+      counter-increment: page curpage;
+    }
+  }
+
+  @keyframes progress {
+    100% {
+      --_progress: 100%;
+    }
+  }
+
+  @keyframes frame {
+    to {
+      --sprite-fs: var(--sprite-fe);
+    }
+  }
+
+  @media (prefers-reduced-motion) {
+    * {
+      animation: none;
+    }
+  }
+</style>
