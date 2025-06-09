@@ -13,40 +13,7 @@
   </head>
   <body>
     <div class="container">
-      <div style="display: flex; justify-content: space-between">
-        <button class="play-button" id="toggleMusic">Play</button>
-        <audio id="bgm" src="/img/youngandbe.mp3" preload="auto"></audio>
-
-        <a
-          href="/index.html"
-          style="
-            color: #242424;
-            text-decoration: none;
-            border-radius: 250px;
-            padding: 0px 20px;
-            text-align: center;
-            background: aqua;
-            align-items: center;
-            display: flex;
-          "
-          >Back</a
-        >
-      </div>
-
-      <script>
-        const audio = document.getElementById("bgm");
-        const button = document.getElementById("toggleMusic");
-
-        button.addEventListener("click", () => {
-          if (audio.paused) {
-            audio.play();
-            button.textContent = "Stop";
-          } else {
-            audio.pause();
-            button.textContent = "Play";
-          }
-        });
-      </script>
+      
       <div class="sprite-wrapper">
         <div class="book">
           <!--  Carousel container -->

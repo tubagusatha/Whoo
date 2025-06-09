@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Particle Morph: Heart ➜ "I love u Jihann" (loop)</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background: #000;
+        color: #fff;
+        font-family: Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+      }
+
+      canvas {
+        width: 100%;
+        max-width: 800px;
+        height: 70vh;
+        background: rgba(0, 0, 0, 0.2);
+        display: block;
+      }
+
+      #waiting-text {
+        margin-top: 20px;
+        font-size: 24px;
+        opacity: 0;
+        transition: opacity 2s ease;
+      }
+
+      #waiting-text.visible {
+        opacity: 1;
+      }
+
+      
+.play-button {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: #ff6b81;
+  border: none;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s;
+}
+
+.play-button:hover {
+  background-color: #4778ff;
+  transform: scale(1.05);
+}
+
+.go-to {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.button-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px; /* Jarak antar tombol */
+  margin-top: 30px;
+}
+
+
+.go-to a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #007bff;
+  color: white;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  text-decoration: none;
+  font-weight: bold;
+  font-family: Arial, sans-serif;
+  transition: background-color 0.3s ease;
+}
+
+.go-to a:hover {
+  background-color: #0056b3;
+}
+    </style>
+  </head>
+  <body>
+        <div style="display: flex; justify-content: space-between">
+        <button class="play-button" id="toggleMusic">Play</button>
+        <audio id="bgm" src="/img/friends.mp3" preload="auto"></audio>
+
+        <a
+          href="/index.html"
+          style="
+            color: #242424;
+            text-decoration: none;
+            border-radius: 250px;
+            padding: 0px 20px;
+            text-align: center;
+            background: aqua;
+            align-items: center;
+            display: flex;
+            margin-left: 20px;
+          "
+          >Back</a
+        >
+      </div>
+    
+    <canvas id="heart"></canvas>
+    <div id="waiting-text">im still waiting u</div>
+
+
+      <script>
+        const audio = document.getElementById("bgm");
+        const button = document.getElementById("toggleMusic");
+
+        button.addEventListener("click", () => {
+          if (audio.paused) {
+            audio.play();
+            button.textContent = "Stop";
+          } else {
+            audio.pause();
+            button.textContent = "Play";
+          }
+        });
+      </script>
+
+    <script>
+      window.requestAnimationFrame =
+        window.__requestAnimationFrame ||
+        window.requestAnimationFrame ||
+        window.webkitRequestAnimationFrame ||
+        window.mozRequestAnimationFrame ||
+        window.oRequestAnimationFrame ||
+        window.msRequestAnimationFrame ||
+        function (cb, el) {
+          const last = el.__lastTime || 0;
+          const now = Date.now();
+          const dt = Math.max(1, 33 - (now - last));
+          setTimeout(cb, dt);
+          el.__lastTime = now + dt;
+        };
+
+      const isDevice =
+        /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(
+          (
+            navigator.userAgent ||
+            navigator.vendor ||
+            window.opera
+          ).toLowerCase()
+        );
+
+      let loaded = false;
+      function init() {
+        if (loaded) return;
+        loaded = true;
+
+        const mobile = isDevice;
+        const koef = mobile ? 0.5 : 1;
+        const canvas = document.getElementById("heart");
+        const ctx = canvas.getContext("2d");
+        let W = (canvas.width = koef * innerWidth);
+        let H = (canvas.height = koef * innerHeight);
+        const rand = Math.random;
+
+        const message1 = "I love u Jihann";
+        const fontSize = 170 * koef;
+        const off = document.createElement("canvas");
+        const offCtx = off.getContext("2d");
+        let textPts = [];
+
+        function generateTextPoints() {
+          off.width = W;
+          off.height = H;
+          offCtx.clearRect(0, 0, W, H);
+          offCtx.fillStyle = "#fff";
+          offCtx.font = `bold ${fontSize}px Arial`;
+          offCtx.textAlign = "center";
+          offCtx.textBaseline = "middle";
+          offCtx.fillText(message1, W / 2, H / 2 - fontSize * 0.3);
+          const img = offCtx.getImageData(0, 0, W, H).data;
+          textPts = [];
+          for (let y = 0; y < H; y += 6) {
+            for (let x = 0; x < W; x += 6) {
+              if (img[(y * W + x) * 4 + 3] > 128) textPts.push([x, y]);
+            }
+          }
+        }
+
+        generateTextPoints();
+
+        const heartFn = (r) => [
+          Math.pow(Math.sin(r), 3),
+          -(
+            15 * Math.cos(r) -
+            5 * Math.cos(2 * r) -
+            2 * Math.cos(3 * r) -
+            Math.cos(4 * r)
+          ),
+        ];
+        const map = (p, sx, sy) => [p[0] * sx, p[1] * sy];
+        const heartPts = [];
+        const dr = mobile ? 0.3 : 0.1;
+
+        for (let r = 0; r < Math.PI * 2; r += dr)
+          heartPts.push(map(heartFn(r), 260, 16));
+        for (let r = 0; r < Math.PI * 2; r += dr)
+          heartPts.push(map(heartFn(r), 190, 11));
+        for (let r = 0; r < Math.PI * 2; r += dr)
+          heartPts.push(map(heartFn(r), 110, 6));
+        const heartLen = heartPts.length;
+
+        const N = Math.max(heartLen, textPts.length);
+        for (let i = heartLen; i < N; i++)
+          heartPts.push(heartPts[i % heartLen]);
+        for (let i = textPts.length; i < N; i++)
+          textPts.push(textPts[i % textPts.length]);
+
+        const trail = mobile ? 20 : 50;
+        const parts = Array.from({ length: N }, () => {
+          const x = rand() * W;
+          const y = rand() * H;
+          return {
+            vx: 0,
+            vy: 0,
+            speed: rand() * 4 + 4,
+            drag: 0.25 * rand() + 0.65,
+            trail: Array.from({ length: trail }, () => ({ x, y })),
+            color: "rgba(255, 0, 0, 0.7)", // WARNA MERAH CERAH
+          };
+        });
+
+        let shape = 0;
+        const SHAPE_FRAMES = 450;
+        let frame = 0;
+        let pulseT = 0;
+        const cfg = { traceK: 0.4 };
+
+        const waitingTextEl = document.getElementById("waiting-text");
+        let waitingShown = false;
+
+        function loop() {
+          if (++frame > SHAPE_FRAMES) {
+            shape = 1 - shape;
+            frame = 0;
+
+            if (!waitingShown && shape === 1) {
+              waitingTextEl.classList.add("visible");
+              waitingShown = true;
+            }
+          }
+
+          const tgtArr = shape === 0 ? heartPts : textPts;
+          const scale = shape === 0 ? (1 + Math.sin(pulseT)) * 0.5 : 1;
+          pulseT += 0.02;
+
+          ctx.fillStyle = "rgba(0,0,0,.12)";
+          ctx.fillRect(0, 0, W, H);
+
+          for (let i = 0; i < N; i++) {
+            const p = parts[i];
+            const tp = tgtArr[i];
+
+            const tx = shape === 0 ? scale * tp[0] + W / 2 : tp[0];
+            const ty = shape === 0 ? scale * tp[1] + H / 2 : tp[1];
+
+            const dx = p.trail[0].x - tx;
+            const dy = p.trail[0].y - ty;
+            const dist = Math.hypot(dx, dy) || 1;
+
+            p.vx += (-dx / dist) * p.speed;
+            p.vy += (-dy / dist) * p.speed;
+            p.trail[0].x += p.vx;
+            p.trail[0].y += p.vy;
+            p.vx *= p.drag;
+            p.vy *= p.drag;
+
+            for (let k = 0; k < trail - 1; ) {
+              const a = p.trail[k];
+              const b = p.trail[++k];
+              b.x -= cfg.traceK * (b.x - a.x);
+              b.y -= cfg.traceK * (b.y - a.y);
+            }
+
+            ctx.fillStyle = p.color;
+            for (let k = 0; k < trail; k++) {
+              const pt = p.trail[k];
+              ctx.fillRect(pt.x, pt.y, 1, 1);
+            }
+          }
+
+          requestAnimationFrame(loop, canvas);
+        }
+
+        window.addEventListener("resize", () => {
+          W = canvas.width = koef * innerWidth;
+          H = canvas.height = koef * innerHeight;
+          ctx.fillStyle = "#000";
+          ctx.fillRect(0, 0, W, H);
+          generateTextPoints();
+        });
+
+        loop();
+      }
+
+      const rs = document.readyState;
+      if (rs === "complete" || rs === "loaded" || rs === "interactive") init();
+      else document.addEventListener("DOMContentLoaded", init, false);
+    </script>
+  </body>
+</html>
