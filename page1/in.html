@@ -39,29 +39,49 @@
         align-items: center;
         background: aqua;
       }
+
+      .play-button {
+        width: 90px;
+        height: 90px;
+        border-radius: 50%;
+        background-color: #ff6b81;
+        border: none;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.2s;
+      }
+
+      .play-button:hover {
+        background-color: #4778ff;
+        transform: scale(1.05);
+      }
     </style>
   </head>
   <body>
     <div class="controls">
+      <button class="play-button" id="toggleMusic">Play</button>
+      <audio id="bgm" src="/img/days.mp3" preload="auto"></audio>
+
       <a href="/index.html" class="back-button">Back</a>
     </div>
-
-    <audio id="audio" autoplay loop>
-      <source src="/img/days.mp3" type="audio/mpeg" />
-      Your browser does not support the audio element.
-    </audio>
 
     <canvas id="c"></canvas>
 
     <!-- helper: autoplay sampai user klik -->
     <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        const a = document.getElementById("audio");
-        const p = a.play();
-        if (p !== undefined) {
-          p.catch(() =>
-            document.addEventListener("click", () => a.play(), { once: true })
-          );
+      const audio = document.getElementById("bgm");
+      const button = document.getElementById("toggleMusic");
+
+      button.addEventListener("click", () => {
+        if (audio.paused) {
+          audio.play();
+          button.textContent = "Stop";
+        } else {
+          audio.pause();
+          button.textContent = "Play";
         }
       });
     </script>

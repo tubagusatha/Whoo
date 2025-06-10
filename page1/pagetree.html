@@ -1,16 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <title>Particle Heart Beat</title>
-  <style>
-    html,body{margin:0;padding:0;overflow:hidden;background:#000}
-    canvas{
-      position:absolute;left:0;top:0;
-      width:100%;height:100%;
-      background:rgba(0,0,0,.2);
-    }
-.back-button {
+  <head>
+    <meta charset="utf-8" />
+    <title>Particle Heart Beat</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background: #000;
+      }
+      canvas {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.2);
+      }
+      .back-button {
         color: #242424;
         text-decoration: none;
         border-radius: 50px;
@@ -20,8 +29,27 @@
         align-items: center;
         background: aqua;
       }
-      
-    .controls {
+
+      .play-button {
+        width: 90px;
+        height: 90px;
+        border-radius: 50%;
+        background-color: #ff6b81;
+        border: none;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.2s;
+      }
+
+      .play-button:hover {
+        background-color: #4778ff;
+        transform: scale(1.05);
+      }
+
+      .controls {
         position: fixed;
         inset: 10px 10px auto 10px;
         z-index: 10;
@@ -30,175 +58,205 @@
         align-items: center;
         padding: 0 20px;
       }
-
-  </style>
-</head>
-<body>
-   <div class="controls">
+    </style>
+  </head>
+  <body>
+    <div class="controls">
+      <button class="play-button" id="toggleMusic">Play</button>
+      <audio id="bgm" src="/img/lve.mp3" preload="auto"></audio>
       <a href="/index.html" class="back-button">Back</a>
     </div>
 
-  <canvas id="heart"></canvas>
+    <canvas id="heart"></canvas>
 
-  <!-- musik opsional -->
-  <audio id="audio" autoplay loop>
-    <source src="/img/lve.mp3" type="audio/mpeg"/>
-    Your browser does not support the audio element.
-  </audio>
+    <!-- musik opsional -->
 
-<script>
-/* ==== Autoplay helper ==== */
-document.addEventListener("DOMContentLoaded",()=>{
-  const a=document.getElementById("audio");
-  const p=a.play();
-  if(p!==undefined){
-    p.catch(()=>document.addEventListener("click",()=>a.play(),{once:true}));
-  }
-});
+    <script>
+      const audio = document.getElementById("bgm");
+      const button = document.getElementById("toggleMusic");
 
-/* ==== rAF polyfill ==== */
-window.requestAnimationFrame=
-window.__requestAnimationFrame||
-window.requestAnimationFrame||
-window.webkitRequestAnimationFrame||
-window.mozRequestAnimationFrame||
-window.oRequestAnimationFrame||
-window.msRequestAnimationFrame||
-(function(){return function(cb,el){
-  var t=el.__lastTime||0,n=Date.now(),dt=Math.max(1,33-(n-t));
-  setTimeout(cb,dt);el.__lastTime=n+dt;
-};})();
+      button.addEventListener("click", () => {
+        if (audio.paused) {
+          audio.play();
+          button.textContent = "Stop";
+        } else {
+          audio.pause();
+          button.textContent = "Play";
+        }
+      });
 
-/* ==== detect mobile ==== */
-window.isDevice=/android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i
- .test((navigator.userAgent||navigator.vendor||window.opera).toLowerCase());
+      /* ==== rAF polyfill ==== */
+      window.requestAnimationFrame =
+        window.__requestAnimationFrame ||
+        window.requestAnimationFrame ||
+        window.webkitRequestAnimationFrame ||
+        window.mozRequestAnimationFrame ||
+        window.oRequestAnimationFrame ||
+        window.msRequestAnimationFrame ||
+        (function () {
+          return function (cb, el) {
+            var t = el.__lastTime || 0,
+              n = Date.now(),
+              dt = Math.max(1, 33 - (n - t));
+            setTimeout(cb, dt);
+            el.__lastTime = n + dt;
+          };
+        })();
 
-/* ==== main ==== */
-let loaded=false;
-function init(){
- if(loaded) return; loaded=true;
+      /* ==== detect mobile ==== */
+      window.isDevice =
+        /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(
+          (
+            navigator.userAgent ||
+            navigator.vendor ||
+            window.opera
+          ).toLowerCase()
+        );
 
- const mobile=isDevice, k=mobile?0.5:1;
- const canvas=document.getElementById("heart");
- const ctx=canvas.getContext("2d");
+      /* ==== main ==== */
+      let loaded = false;
+      function init() {
+        if (loaded) return;
+        loaded = true;
 
- let W=canvas.width =k*innerWidth,
-     H=canvas.height=k*innerHeight;
+        const mobile = isDevice,
+          k = mobile ? 0.5 : 1;
+        const canvas = document.getElementById("heart");
+        const ctx = canvas.getContext("2d");
 
- const rand=Math.random;
+        let W = (canvas.width = k * innerWidth),
+          H = (canvas.height = k * innerHeight);
 
- ctx.fillStyle="rgba(0,0,0,1)";
- ctx.fillRect(0,0,W,H);
+        const rand = Math.random;
 
- const heartPos=r=>[
-   Math.pow(Math.sin(r),3),
-   -(15*Math.cos(r)-5*Math.cos(2*r)-2*Math.cos(3*r)-Math.cos(4*r))
- ];
- const st=(p,sx,sy,dx,dy)=>[dx+p[0]*sx,dy+p[1]*sy];
+        ctx.fillStyle = "rgba(0,0,0,1)";
+        ctx.fillRect(0, 0, W, H);
 
- window.addEventListener("resize",()=>{
-   W=canvas.width =k*innerWidth;
-   H=canvas.height=k*innerHeight;
-   ctx.fillStyle="rgba(0,0,0,1)";
-   ctx.fillRect(0,0,W,H);
- });
+        const heartPos = (r) => [
+          Math.pow(Math.sin(r), 3),
+          -(
+            15 * Math.cos(r) -
+            5 * Math.cos(2 * r) -
+            2 * Math.cos(3 * r) -
+            Math.cos(4 * r)
+          ),
+        ];
+        const st = (p, sx, sy, dx, dy) => [dx + p[0] * sx, dy + p[1] * sy];
 
- /* origin points */
- const traceCnt = mobile?20:50;
- const pts=[];
- const dr=mobile?0.3:0.1;
- for(let a=0;a<Math.PI*2;a+=dr) pts.push(st(heartPos(a),210,13,0,0));
- for(let a=0;a<Math.PI*2;a+=dr) pts.push(st(heartPos(a),150,9 ,0,0));
- for(let a=0;a<Math.PI*2;a+=dr) pts.push(st(heartPos(a), 90,5 ,0,0));
+        window.addEventListener("resize", () => {
+          W = canvas.width = k * innerWidth;
+          H = canvas.height = k * innerHeight;
+          ctx.fillStyle = "rgba(0,0,0,1)";
+          ctx.fillRect(0, 0, W, H);
+        });
 
- const N=pts.length;
- const targets=[];
+        /* origin points */
+        const traceCnt = mobile ? 20 : 50;
+        const pts = [];
+        const dr = mobile ? 0.3 : 0.1;
+        for (let a = 0; a < Math.PI * 2; a += dr)
+          pts.push(st(heartPos(a), 210, 13, 0, 0));
+        for (let a = 0; a < Math.PI * 2; a += dr)
+          pts.push(st(heartPos(a), 150, 9, 0, 0));
+        for (let a = 0; a < Math.PI * 2; a += dr)
+          pts.push(st(heartPos(a), 90, 5, 0, 0));
 
- const pulse=(kx,ky)=>{
-   for(let i=0;i<pts.length;i++){
-     targets[i]=[
-       kx*pts[i][0]+W/2,
-       ky*pts[i][1]+H/2
-     ];
-   }
- };
+        const N = pts.length;
+        const targets = [];
 
- /* particles */
- const parts=[];
- for(let i=0;i<N;i++){
-   const x=rand()*W,y=rand()*H;
-   parts[i]={
-     vx:0,vy:0,
-     speed:rand()+5,
-     q:~~(rand()*N),
-     D:2*(i%2)-1,
-     force:0.2*rand()+0.7,
-     color:["red","white","yellow","deepskyblue","orange","fuchsia","cyan"][~~(rand()*7)],
-     trace:Array.from({length:traceCnt},()=>({x,y}))
-   };
- }
+        const pulse = (kx, ky) => {
+          for (let i = 0; i < pts.length; i++) {
+            targets[i] = [kx * pts[i][0] + W / 2, ky * pts[i][1] + H / 2];
+          }
+        };
 
- const cfg={traceK:0.4,timeDelta:0.008}; // lebih pelan sedikit
- let t=0;
+        /* particles */
+        const parts = [];
+        for (let i = 0; i < N; i++) {
+          const x = rand() * W,
+            y = rand() * H;
+          parts[i] = {
+            vx: 0,
+            vy: 0,
+            speed: rand() + 5,
+            q: ~~(rand() * N),
+            D: 2 * (i % 2) - 1,
+            force: 0.2 * rand() + 0.7,
+            color: [
+              "red",
+              "white",
+              "yellow",
+              "deepskyblue",
+              "orange",
+              "fuchsia",
+              "cyan",
+            ][~~(rand() * 7)],
+            trace: Array.from({ length: traceCnt }, () => ({ x, y })),
+          };
+        }
 
- const loop=()=>{
-   /* ==== heartbeat scale ==== */
-   const beat=1+0.2*Math.sin(t*2);   // 0,8 ↔ 1,2
-   pulse(beat,beat);
+        const cfg = { traceK: 0.4, timeDelta: 0.008 }; // lebih pelan sedikit
+        let t = 0;
 
-   t+=cfg.timeDelta;
+        const loop = () => {
+          /* ==== heartbeat scale ==== */
+          const beat = 1 + 0.2 * Math.sin(t * 2); // 0,8 ↔ 1,2
+          pulse(beat, beat);
 
-   /* clear trailing */
-   ctx.fillStyle="rgba(0,0,0,.05)";
-   ctx.fillRect(0,0,W,H);
+          t += cfg.timeDelta;
 
-   /* particles update */
-   for(let i=parts.length;i--;){
-     const p=parts[i];
-     const q=targets[p.q];
-     const dx=p.trace[0].x-q[0];
-     const dy=p.trace[0].y-q[1];
-     const L=Math.hypot(dx,dy);
+          /* clear trailing */
+          ctx.fillStyle = "rgba(0,0,0,.05)";
+          ctx.fillRect(0, 0, W, H);
 
-     /* choose new target if near */
-     if(L<10){
-       if(rand()>0.95){
-         p.q=~~(rand()*N);
-       }else{
-         if(rand()>0.99) p.D*=-1;
-         p.q=(p.q+p.D+N)%N;
-       }
-     }
+          /* particles update */
+          for (let i = parts.length; i--; ) {
+            const p = parts[i];
+            const q = targets[p.q];
+            const dx = p.trace[0].x - q[0];
+            const dy = p.trace[0].y - q[1];
+            const L = Math.hypot(dx, dy);
 
-     /* move towards target */
-     p.vx+=(-dx/L)*p.speed;
-     p.vy+=(-dy/L)*p.speed;
-     p.trace[0].x+=p.vx;
-     p.trace[0].y+=p.vy;
-     p.vx*=p.force;
-     p.vy*=p.force;
+            /* choose new target if near */
+            if (L < 10) {
+              if (rand() > 0.95) {
+                p.q = ~~(rand() * N);
+              } else {
+                if (rand() > 0.99) p.D *= -1;
+                p.q = (p.q + p.D + N) % N;
+              }
+            }
 
-     /* smooth trace */
-     for(let k=0;k<p.trace.length-1;){
-       const A=p.trace[k],B=p.trace[++k];
-       B.x-=cfg.traceK*(B.x-A.x);
-       B.y-=cfg.traceK*(B.y-A.y);
-     }
+            /* move towards target */
+            p.vx += (-dx / L) * p.speed;
+            p.vy += (-dy / L) * p.speed;
+            p.trace[0].x += p.vx;
+            p.trace[0].y += p.vy;
+            p.vx *= p.force;
+            p.vy *= p.force;
 
-     /* draw trace */
-     ctx.fillStyle=p.color;
-     for(let k=0;k<p.trace.length;k++){
-       ctx.fillRect(p.trace[k].x,p.trace[k].y,1.5,1.5);
-     }
-   }
+            /* smooth trace */
+            for (let k = 0; k < p.trace.length - 1; ) {
+              const A = p.trace[k],
+                B = p.trace[++k];
+              B.x -= cfg.traceK * (B.x - A.x);
+              B.y -= cfg.traceK * (B.y - A.y);
+            }
 
-   requestAnimationFrame(loop,canvas);
- };
- loop();
-}
+            /* draw trace */
+            ctx.fillStyle = p.color;
+            for (let k = 0; k < p.trace.length; k++) {
+              ctx.fillRect(p.trace[k].x, p.trace[k].y, 1.5, 1.5);
+            }
+          }
 
-if(/complete|loaded|interactive/.test(document.readyState)) init();
-else document.addEventListener("DOMContentLoaded",init,false);
-</script>
-</body>
+          requestAnimationFrame(loop, canvas);
+        };
+        loop();
+      }
+
+      if (/complete|loaded|interactive/.test(document.readyState)) init();
+      else document.addEventListener("DOMContentLoaded", init, false);
+    </script>
+  </body>
 </html>
