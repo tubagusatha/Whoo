@@ -1,312 +1,204 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <title>Love u</title>
-    <style>
-      html, body {
-        margin: 0;
-        padding: 0;
-        overflow: hidden;
-        background: #000;
-        color: #fff;
-        font-family: Arial, sans-serif;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        height: 100vh;
-      }
-
-      canvas {
-        width: 100%;
-        max-width: 800px;
-        height: 70vh;
-        background: rgba(0, 0, 0, 0.2);
-        display: block;
-      }
-
-      #waiting-text {
-        margin-top: 20px;
-        font-size: 24px;
-        opacity: 0;
-        transition: opacity 2s ease;
-      }
-
-      #waiting-text.visible {
-        opacity: 1;
-      }
-
-      .play-button {
-        width: 80px;
-        height: 80px;
-        border-radius: 50%;
-        background-color: #ff6b81;
-        border: none;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        color: white;
-        font-size: 16px;
-        font-weight: bold;
-        cursor: pointer;
-        transition: background-color 0.3s ease, transform 0.2s;
-      }
-
-      .play-button:hover {
-        background-color: #4778ff;
-        transform: scale(1.05);
-      }
-
-      .go-to {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-
-      .button-wrapper {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 20px;
-        margin-top: 30px;
-      }
-
-      .go-to a {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: #007bff;
-        color: white;
-        width: 60px;
-        height: 60px;
-        border-radius: 50%;
+<head>
+  <meta charset="utf-8" />
+  <title>Particle Heart Beat</title>
+  <style>
+    html,body{margin:0;padding:0;overflow:hidden;background:#000}
+    canvas{
+      position:absolute;left:0;top:0;
+      width:100%;height:100%;
+      background:rgba(0,0,0,.2);
+    }
+.back-button {
+        color: #242424;
         text-decoration: none;
-        font-weight: bold;
-        font-family: Arial, sans-serif;
-        transition: background-color 0.3s ease;
+        border-radius: 50px;
+        padding: 0 20px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        background: aqua;
+      }
+      
+    .controls {
+        position: fixed;
+        inset: 10px 10px auto 10px;
+        z-index: 10;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 20px;
       }
 
-      .go-to a:hover {
-        background-color: #0056b3;
-      }
-    </style>
-  </head>
-  <body>
-    <div style="display: flex; justify-content: space-between">
-      <button class="play-button" id="toggleMusic">Play</button>
-      <audio id="bgm" src="/img/friends.mp3" preload="auto"></audio>
-
-      <a
-        href="/index.html"
-        style="
-          color: #242424;
-          text-decoration: none;
-          border-radius: 250px;
-          padding: 0px 20px;
-          text-align: center;
-          background: aqua;
-          align-items: center;
-          display: flex;
-          margin-left: 20px;
-        "
-      >Back</a>
+  </style>
+</head>
+<body>
+   <div class="controls">
+      <a href="/index.html" class="back-button">Back</a>
     </div>
 
-    <canvas id="heart"></canvas>
-    <div id="waiting-text">im still waiting u</div>
+  <canvas id="heart"></canvas>
 
-    <script>
-      const audio = document.getElementById("bgm");
-      const button = document.getElementById("toggleMusic");
+  <!-- musik opsional -->
+  <audio id="audio" autoplay loop>
+    <source src="/img/lve.mp3" type="audio/mpeg"/>
+    Your browser does not support the audio element.
+  </audio>
 
-      button.addEventListener("click", () => {
-        if (audio.paused) {
-          audio.play();
-          button.textContent = "Stop";
-        } else {
-          audio.pause();
-          button.textContent = "Play";
-        }
-      });
-    </script>
+<script>
+/* ==== Autoplay helper ==== */
+document.addEventListener("DOMContentLoaded",()=>{
+  const a=document.getElementById("audio");
+  const p=a.play();
+  if(p!==undefined){
+    p.catch(()=>document.addEventListener("click",()=>a.play(),{once:true}));
+  }
+});
 
-    <script>
-      window.requestAnimationFrame =
-        window.__requestAnimationFrame ||
-        window.requestAnimationFrame ||
-        window.webkitRequestAnimationFrame ||
-        window.mozRequestAnimationFrame ||
-        window.oRequestAnimationFrame ||
-        window.msRequestAnimationFrame ||
-        function (cb, el) {
-          const last = el.__lastTime || 0;
-          const now = Date.now();
-          const dt = Math.max(1, 33 - (now - last));
-          setTimeout(cb, dt);
-          el.__lastTime = now + dt;
-        };
+/* ==== rAF polyfill ==== */
+window.requestAnimationFrame=
+window.__requestAnimationFrame||
+window.requestAnimationFrame||
+window.webkitRequestAnimationFrame||
+window.mozRequestAnimationFrame||
+window.oRequestAnimationFrame||
+window.msRequestAnimationFrame||
+(function(){return function(cb,el){
+  var t=el.__lastTime||0,n=Date.now(),dt=Math.max(1,33-(n-t));
+  setTimeout(cb,dt);el.__lastTime=n+dt;
+};})();
 
-      const isDevice =
-        /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(
-          (navigator.userAgent || navigator.vendor || window.opera).toLowerCase()
-        );
+/* ==== detect mobile ==== */
+window.isDevice=/android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i
+ .test((navigator.userAgent||navigator.vendor||window.opera).toLowerCase());
 
-      let loaded = false;
-      function init() {
-        if (loaded) return;
-        loaded = true;
+/* ==== main ==== */
+let loaded=false;
+function init(){
+ if(loaded) return; loaded=true;
 
-        const mobile = isDevice;
-        const koef = mobile ? 0.5 : 1;
-        const canvas = document.getElementById("heart");
-        const ctx = canvas.getContext("2d");
-        let W = (canvas.width = koef * innerWidth);
-        let H = (canvas.height = koef * innerHeight);
-        const rand = Math.random;
+ const mobile=isDevice, k=mobile?0.5:1;
+ const canvas=document.getElementById("heart");
+ const ctx=canvas.getContext("2d");
 
-        const message1 = "I love u Jihann";
-        const fontSize = 170 * koef;
-        const off = document.createElement("canvas");
-        const offCtx = off.getContext("2d");
-        let textPts = [];
+ let W=canvas.width =k*innerWidth,
+     H=canvas.height=k*innerHeight;
 
-        function generateTextPoints() {
-          off.width = W;
-          off.height = H;
-          offCtx.clearRect(0, 0, W, H);
-          offCtx.fillStyle = "#fff";
-          offCtx.font = `bold ${fontSize}px Arial`;
-          offCtx.textAlign = "center";
-          offCtx.textBaseline = "middle";
-          offCtx.fillText(message1, W / 2, H / 2 - fontSize * 0.3);
-          const img = offCtx.getImageData(0, 0, W, H).data;
-          textPts = [];
-          for (let y = 0; y < H; y += 6) {
-            for (let x = 0; x < W; x += 6) {
-              if (img[(y * W + x) * 4 + 3] > 128) textPts.push([x, y]);
-            }
-          }
-        }
+ const rand=Math.random;
 
-        generateTextPoints();
+ ctx.fillStyle="rgba(0,0,0,1)";
+ ctx.fillRect(0,0,W,H);
 
-        const heartFn = (r) => [
-          Math.pow(Math.sin(r), 3),
-          -(15 * Math.cos(r) - 5 * Math.cos(2 * r) - 2 * Math.cos(3 * r) - Math.cos(4 * r)),
-        ];
-        const map = (p, sx, sy) => [p[0] * sx, p[1] * sy];
-        const heartPts = [];
-        const dr = mobile ? 0.3 : 0.1;
+ const heartPos=r=>[
+   Math.pow(Math.sin(r),3),
+   -(15*Math.cos(r)-5*Math.cos(2*r)-2*Math.cos(3*r)-Math.cos(4*r))
+ ];
+ const st=(p,sx,sy,dx,dy)=>[dx+p[0]*sx,dy+p[1]*sy];
 
-        for (let r = 0; r < Math.PI * 2; r += dr)
-          heartPts.push(map(heartFn(r), 260, 16));
-        for (let r = 0; r < Math.PI * 2; r += dr)
-          heartPts.push(map(heartFn(r), 190, 11));
-        for (let r = 0; r < Math.PI * 2; r += dr)
-          heartPts.push(map(heartFn(r), 110, 6));
-        const heartLen = heartPts.length;
+ window.addEventListener("resize",()=>{
+   W=canvas.width =k*innerWidth;
+   H=canvas.height=k*innerHeight;
+   ctx.fillStyle="rgba(0,0,0,1)";
+   ctx.fillRect(0,0,W,H);
+ });
 
-        const N = Math.max(heartLen, textPts.length);
-        for (let i = heartLen; i < N; i++) heartPts.push(heartPts[i % heartLen]);
-        for (let i = textPts.length; i < N; i++) textPts.push(textPts[i % textPts.length]);
+ /* origin points */
+ const traceCnt = mobile?20:50;
+ const pts=[];
+ const dr=mobile?0.3:0.1;
+ for(let a=0;a<Math.PI*2;a+=dr) pts.push(st(heartPos(a),210,13,0,0));
+ for(let a=0;a<Math.PI*2;a+=dr) pts.push(st(heartPos(a),150,9 ,0,0));
+ for(let a=0;a<Math.PI*2;a+=dr) pts.push(st(heartPos(a), 90,5 ,0,0));
 
-        const trail = mobile ? 20 : 50;
+ const N=pts.length;
+ const targets=[];
 
-        // Warna cerah yang akan bergantian digunakan
-        const brightColors = ["#ff4d4d", "#4da6ff", "#ffff66", "#ffffff"];
+ const pulse=(kx,ky)=>{
+   for(let i=0;i<pts.length;i++){
+     targets[i]=[
+       kx*pts[i][0]+W/2,
+       ky*pts[i][1]+H/2
+     ];
+   }
+ };
 
-        const parts = Array.from({ length: N }, () => {
-          const x = rand() * W;
-          const y = rand() * H;
-          return {
-            vx: 0,
-            vy: 0,
-            speed: rand() * 4 + 4,
-            drag: 0.25 * rand() + 0.65,
-            trail: Array.from({ length: trail }, () => ({ x, y })),
-            colorIndex: Math.floor(rand() * brightColors.length),
-          };
-        });
+ /* particles */
+ const parts=[];
+ for(let i=0;i<N;i++){
+   const x=rand()*W,y=rand()*H;
+   parts[i]={
+     vx:0,vy:0,
+     speed:rand()+5,
+     q:~~(rand()*N),
+     D:2*(i%2)-1,
+     force:0.2*rand()+0.7,
+     color:["red","white","yellow","deepskyblue","orange","fuchsia","cyan"][~~(rand()*7)],
+     trace:Array.from({length:traceCnt},()=>({x,y}))
+   };
+ }
 
-        let shape = 0;
-        const SHAPE_FRAMES = 450;
-        let frame = 0;
-        let pulseT = 0;
-        const cfg = { traceK: 0.4 };
+ const cfg={traceK:0.4,timeDelta:0.008}; // lebih pelan sedikit
+ let t=0;
 
-        const waitingTextEl = document.getElementById("waiting-text");
-        let waitingShown = false;
+ const loop=()=>{
+   /* ==== heartbeat scale ==== */
+   const beat=1+0.2*Math.sin(t*2);   // 0,8 ↔ 1,2
+   pulse(beat,beat);
 
-        function loop() {
-          if (++frame > SHAPE_FRAMES) {
-            shape = 1 - shape;
-            frame = 0;
-            if (!waitingShown && shape === 1) {
-              waitingTextEl.classList.add("visible");
-              waitingShown = true;
-            }
-          }
+   t+=cfg.timeDelta;
 
-          const tgtArr = shape === 0 ? heartPts : textPts;
-          const scale = shape === 0 ? (1 + Math.sin(pulseT)) * 0.5 : 1;
-          pulseT += 0.02;
+   /* clear trailing */
+   ctx.fillStyle="rgba(0,0,0,.05)";
+   ctx.fillRect(0,0,W,H);
 
-          ctx.fillStyle = "rgba(0,0,0,.12)";
-          ctx.fillRect(0, 0, W, H);
+   /* particles update */
+   for(let i=parts.length;i--;){
+     const p=parts[i];
+     const q=targets[p.q];
+     const dx=p.trace[0].x-q[0];
+     const dy=p.trace[0].y-q[1];
+     const L=Math.hypot(dx,dy);
 
-          for (let i = 0; i < N; i++) {
-            const p = parts[i];
-            const tp = tgtArr[i];
+     /* choose new target if near */
+     if(L<10){
+       if(rand()>0.95){
+         p.q=~~(rand()*N);
+       }else{
+         if(rand()>0.99) p.D*=-1;
+         p.q=(p.q+p.D+N)%N;
+       }
+     }
 
-            const tx = shape === 0 ? scale * tp[0] + W / 2 : tp[0];
-            const ty = shape === 0 ? scale * tp[1] + H / 2 : tp[1];
+     /* move towards target */
+     p.vx+=(-dx/L)*p.speed;
+     p.vy+=(-dy/L)*p.speed;
+     p.trace[0].x+=p.vx;
+     p.trace[0].y+=p.vy;
+     p.vx*=p.force;
+     p.vy*=p.force;
 
-            const dx = p.trail[0].x - tx;
-            const dy = p.trail[0].y - ty;
-            const dist = Math.hypot(dx, dy) || 1;
+     /* smooth trace */
+     for(let k=0;k<p.trace.length-1;){
+       const A=p.trace[k],B=p.trace[++k];
+       B.x-=cfg.traceK*(B.x-A.x);
+       B.y-=cfg.traceK*(B.y-A.y);
+     }
 
-            p.vx += (-dx / dist) * p.speed;
-            p.vy += (-dy / dist) * p.speed;
-            p.trail[0].x += p.vx;
-            p.trail[0].y += p.vy;
-            p.vx *= p.drag;
-            p.vy *= p.drag;
+     /* draw trace */
+     ctx.fillStyle=p.color;
+     for(let k=0;k<p.trace.length;k++){
+       ctx.fillRect(p.trace[k].x,p.trace[k].y,1.5,1.5);
+     }
+   }
 
-            for (let k = 0; k < trail - 1;) {
-              const a = p.trail[k];
-              const b = p.trail[++k];
-              b.x -= cfg.traceK * (b.x - a.x);
-              b.y -= cfg.traceK * (b.y - a.y);
-            }
+   requestAnimationFrame(loop,canvas);
+ };
+ loop();
+}
 
-            // Update dan set warna cerah siklus
-            if (frame % 10 === 0) {
-              p.colorIndex = (p.colorIndex + 1) % brightColors.length;
-            }
-            ctx.fillStyle = brightColors[p.colorIndex];
-
-            for (let k = 0; k < trail; k++) {
-              const pt = p.trail[k];
-              ctx.fillRect(pt.x, pt.y, 1, 1);
-            }
-          }
-
-          requestAnimationFrame(loop, canvas);
-        }
-
-        window.addEventListener("resize", () => {
-          W = canvas.width = koef * innerWidth;
-          H = canvas.height = koef * innerHeight;
-          ctx.fillStyle = "#000";
-          ctx.fillRect(0, 0, W, H);
-          generateTextPoints();
-        });
-
-        loop();
-      }
-
-      const rs = document.readyState;
-      if (rs === "complete" || rs === "loaded" || rs === "interactive") init();
-      else document.addEventListener("DOMContentLoaded", init, false);
-    </script>
-  </body>
+if(/complete|loaded|interactive/.test(document.readyState)) init();
+else document.addEventListener("DOMContentLoaded",init,false);
+</script>
+</body>
 </html>

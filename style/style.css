@@ -1,7 +1,7 @@
 body {
   overflow: hidden;
   font-family: "Roboto", serif;
-  background: linear-gradient(135deg, rgba(0, 0, 0, 0.7), rgba(34, 0, 51, 0.7)),
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.544), rgba(34, 0, 51, 0.462)),
     url("/img/bg.webp");
   background-size: cover;
   background-position: center;

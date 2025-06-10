@@ -3,14 +3,17 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>MyLove</title>
+    <title>MyJihan</title>
     <link rel="stylesheet" href="style/style.css" />
   </head>
   <body>
-    <div class="button-wrapper">
-      <button class="play-button" id="toggleMusic">Play</button>
-      <audio id="bgm" src="/img/margaret.mp3" preload="auto"></audio>
+    <!-- musik opsional -->
+    <audio id="audio" autoplay loop>
+      <source src="/img/margaret.mp3" type="audio/mpeg" />
+      Your browser does not support the audio element.
+    </audio>
 
+    <div class="button-wrapper">
       <div class="go-to">
         <a href="page1/page.html">Book</a>
       </div>
@@ -29,16 +32,13 @@
     </div>
 
     <script>
-      const audio = document.getElementById("bgm");
-      const button = document.getElementById("toggleMusic");
-
-      button.addEventListener("click", () => {
-        if (audio.paused) {
-          audio.play();
-          button.textContent = "Stop";
-        } else {
-          audio.pause();
-          button.textContent = "Play";
+      document.addEventListener("DOMContentLoaded", () => {
+        const a = document.getElementById("audio");
+        const p = a.play();
+        if (p !== undefined) {
+          p.catch(() =>
+            document.addEventListener("click", () => a.play(), { once: true })
+          );
         }
       });
     </script>
@@ -155,7 +155,6 @@
         </div>
       </div>
 
-      
       <div class="carousel-item">
         <div class="carousel-box">
           <div class="title">🎁</div>
@@ -196,7 +195,6 @@
           </div>
         </div>
       </div>
-
     </div>
 
     <div class="layout">
